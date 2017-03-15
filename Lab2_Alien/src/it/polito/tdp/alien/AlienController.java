@@ -7,6 +7,10 @@ package it.polito.tdp.alien;
 
 
 import java.net.URL;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -30,6 +34,8 @@ public class AlienController {
     @FXML
     private Button btnReset;
         
+   
+ 
     
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -40,16 +46,35 @@ public class AlienController {
     	
     }
   
+    AlienDictionary ad = new AlienDictionary();
     
     @FXML
     void doTranslate(ActionEvent event) {
+    	
+    	String s = txtWord.getText().toLowerCase();
+    	
+    		if(s.contains(" ")){
+			String parole[] = s.split(" ");
+			
+			ad.addWord(parole[0], parole[1]);
+			
+			txtResult.appendText(parole[0]+" "+parole[1]+"\n");
+		}
+		else{
+			String trad = ad.translateWord(s);
+			if(trad != null)
+				txtResult.appendText(trad);
+			else
+				txtResult.appendText("La parola non è presente nel dizionario\n");
+		}
     	    	
     }
     
     
     @FXML
     void doReset(ActionEvent event) {
-
+    	txtResult.clear();
+    	
     }
     
 }
